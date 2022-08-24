@@ -9,6 +9,7 @@ dj-email-url==1.0.5
 Django==4.1
 django-allauth==0.51.0
 django-cache-url==3.4.2
+django-crispy-forms==1.14.0
 environs==9.5.0
 idna==3.3
 marshmallow==3.17.0

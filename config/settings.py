@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Third party
     'allauth',
     'allauth.account',
+    'crispy_forms',
 
     # my apps
     'accounts',
@@ -151,3 +152,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# crispy
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
