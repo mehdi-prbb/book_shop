@@ -1,0 +1,10 @@
+{% load account %}
+{% user_display user as user_display %}
+{% autoescape off %}
+
+Hello from {{ current_site.name }}.
+
+If you recieve this email please click on the linl below.
+{{ activate_url }}
+
+{% endautoescape %}
