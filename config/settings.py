@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from re import T
 from environs import Env
 
 # For environment variables
@@ -155,3 +156,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # crispy
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# all auth settings
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_UNIQUE_USERNAME = True
