@@ -16,6 +16,7 @@
         {{ form|crispy }}
         <input type="submit" value="Log In">
         <a href="{% url 'account_reset_password' %}">Forgotten password?</a>
+        <p>Sign In with your <a href="{% url 'google_login' %}">Google Account</a></p>
     </form>
 </body>
 </html>
