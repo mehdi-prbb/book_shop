@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from re import T
 from environs import Env
 
 # For environment variables
@@ -55,6 +54,7 @@ INSTALLED_APPS = [
     # my apps
     'accounts',
     'pages',
+    'products',
 ]
 
 SITE_ID = 1
