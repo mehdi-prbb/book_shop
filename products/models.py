@@ -7,11 +7,11 @@ class Category(models.Model):
                                 on_delete=models.CASCADE,
                                 null=True, blank=True)
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255, unique=True, blank=True, help_text='You can leave it blank')
+    slug = models.SlugField(max_length=255, unique=True, blank=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.title, allow_unicode=True)
         super(Category, self).save(*args, **kwargs)
 
     class Meta:
@@ -28,8 +28,9 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=255, unique=True, blank=True, help_text='You can leave it blank')
+    category = models.ForeignKey(Category, related_name='products',
+                                 on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
     price = models.PositiveIntegerField(default=0)
@@ -39,7 +40,7 @@ class Product(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.title, allow_unicode=True)
         super(Product, self).save(*args, **kwargs)
 
     class Meta:
