@@ -7,7 +7,8 @@ class Category(models.Model):
                                 on_delete=models.CASCADE,
                                 null=True, blank=True)
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255, unique=True, blank=True, editable=False)
+    slug = models.SlugField(max_length=255, unique=True, blank=True,
+                             editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -28,9 +29,13 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+
+    """ This class is for getting the general features of the products. """
+
     category = models.ForeignKey(Category, related_name='products',
                                  on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=255, unique=True, blank=True, editable=False)
+    slug = models.SlugField(max_length=255, unique=True, blank=True,
+                             editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
     price = models.PositiveIntegerField(default=0)
