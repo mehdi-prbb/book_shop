@@ -72,7 +72,7 @@ class Mobile(models.Model):
 
 
 class Choices(models.Model):
-    mobile = models.ForeignKey(Mobile, related_name='mobile_colores',
+    mobile = models.ForeignKey(Mobile, related_name='mobile_colors',
                                  on_delete=models.CASCADE, default='10')
     color_name = models.CharField(max_length=100)
     color = ColorField(default='#FF0000')

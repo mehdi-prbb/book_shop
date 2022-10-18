@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block page_title %}Products{% endblock page_title %}
+
+{% block content %}
+    <h1>Mobiles</h1>
+    {% for mobile in mobiles%}
+        {{ mobile.product.title }}    
+        {{ mobile.product.description }}  
+        {{ mobile.product.price }}  
+        {% for color in mobile.mobile_colors.all %}
+            {{ color.color }}
+        {% endfor %}
+    {% endfor %}
+{% endblock content %}

@@ -1,9 +1,9 @@
 from django.views import generic
 
-from .models import Product
+from .models import Mobile
 
 
-class ProductListView(generic.ListView):
-    model = Product
-    template_name = 'products/product_list.html'
-    context_object_name = 'products'
+class MobileListView(generic.ListView):
+    queryset = Mobile.objects.select_related('product').prefetch_related('mobile_colors')
+    template_name = 'products/mobile_list.html'
+    context_object_name = 'mobiles'
