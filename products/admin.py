@@ -14,8 +14,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'price', 'created_at', 'active']
 
 
-class ChoicesInline(admin.TabularInline):
+class MobileChoicesInline(admin.TabularInline):
     model = Choices
+    fk_name = 'mobile'
     extra = 0
 
 
@@ -24,8 +25,8 @@ class MobileAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_price', 'get_create_time',
                      'get_modified_time', 'get_status' ]
 
-    # def get_queryset(self, request):
-    #     return super(MobileAdmin,self).get_queryset(request).select_related('product')
+    def get_queryset(self, request):
+        return super(MobileAdmin,self).get_queryset(request).select_related('product')
 
     @admin.display(description='Title')
     def get_name(self, obj):
@@ -47,4 +48,4 @@ class MobileAdmin(admin.ModelAdmin):
     def get_modified_time(self, obj):
         return obj.product.modified_at
 
-    inlines = [ChoicesInline, ]
+    inlines = [MobileChoicesInline, ]

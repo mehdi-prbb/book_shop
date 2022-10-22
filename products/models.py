@@ -1,3 +1,4 @@
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.utils.text import slugify
 from colorfield.fields import ColorField
@@ -71,9 +72,24 @@ class Mobile(models.Model):
         return self.product.title
 
 
+class Laptop(models.Model):
+    product = models.ForeignKey(Product, related_name='laptops',
+                                on_delete=models.CASCADE)
+    cpu = models.CharField(max_length=100, null=True, blank=True)
+    ram = models.CharField(max_length=100, null=True, blank=True)
+    gpu = models.CharField(max_length=100, null=True, blank=True)
+    screen = models.CharField(max_length=100, null=True, blank=True)
+    userـclassification = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.product.title
+
+
 class Choices(models.Model):
     mobile = models.ForeignKey(Mobile, related_name='mobile_colors',
-                                 on_delete=models.CASCADE, default='10')
+                                 on_delete=models.CASCADE, null=True)
+    laptop = models.ForeignKey(Laptop, related_name='laptop_colors',
+                                 on_delete=models.CASCADE, null=True)
     color_name = models.CharField(max_length=100)
     color = ColorField(default='#FF0000')
 
