@@ -1,4 +1,3 @@
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.utils.text import slugify
 from colorfield.fields import ColorField
@@ -87,9 +86,9 @@ class Laptop(models.Model):
 
 class Choices(models.Model):
     mobile = models.ForeignKey(Mobile, related_name='mobile_colors',
-                                 on_delete=models.CASCADE, null=True)
+                                 on_delete=models.CASCADE, null=True, editable=False)
     laptop = models.ForeignKey(Laptop, related_name='laptop_colors',
-                                 on_delete=models.CASCADE, null=True)
+                                 on_delete=models.CASCADE, null=True, editable=False)
     color_name = models.CharField(max_length=100)
     color = ColorField(default='#FF0000')
 
