@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+
+{% block page_title %}Products{% endblock page_title %}
+
+{% block content %}
+    <h1>laptops</h1>
+    {% for laptop in laptops %}
+        {{ laptop.product.title }}    
+        {{ laptop.product.description }}  
+        {{ laptop.product.price }}  
+        {% for color in laptop.choices.all %}
+            {{ color.color }}
+        {% endfor %}
+    {% endfor %}
+{% endblock content %}

@@ -8,7 +8,7 @@
         {{ mobile.product.title }}    
         {{ mobile.product.description }}  
         {{ mobile.product.price }}  
-        {% for color in mobile.mobile_colors.all %}
+        {% for color in mobile.choices.all %}
             {{ color.color }}
         {% endfor %}
     {% endfor %}

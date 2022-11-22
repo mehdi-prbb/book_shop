@@ -15,15 +15,14 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class MobileChoicesInline(admin.TabularInline):
-    model = Choices
-    extra = 0
+    model = Mobile.choices.through
+    extra = 1
 
 
 @admin.register(Mobile)
 class MobileAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_price', 'get_create_time',
                      'get_modified_time', 'get_status' ]
-
     def get_queryset(self, request):
         return super(MobileAdmin,self).get_queryset(request).select_related('product')
 
@@ -48,18 +47,20 @@ class MobileAdmin(admin.ModelAdmin):
         return obj.product.modified_at
 
     inlines = [MobileChoicesInline, ]
+    exclude = ['choices']
+
+admin.site.register(Choices)
 
 
 class LaptopChoicesInline(admin.TabularInline):
-    model = Choices
-    extra = 0
-
+    model = Laptop.choices.through
+    extra = 1
 
 @admin.register(Laptop)
 class LaptopAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_price', 'get_create_time',
                      'get_modified_time', 'get_status' ]
-
+                     
     def get_queryset(self, request):
         return super(LaptopAdmin,self).get_queryset(request).select_related('product')
 
@@ -84,3 +85,4 @@ class LaptopAdmin(admin.ModelAdmin):
         return obj.product.modified_at
 
     inlines = [LaptopChoicesInline, ]
+    exclude = ['choices']

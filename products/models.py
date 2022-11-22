@@ -30,9 +30,6 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-
-    """ This class is for getting the general features of the products. """
-
     category = models.ForeignKey(Category, related_name='products',
                                  on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255, unique=True, blank=True,
@@ -56,9 +53,18 @@ class Product(models.Model):
         return self.title
 
 
+class Choices(models.Model):
+    color_name = models.CharField(max_length=100)
+    color = ColorField(default='#FF0000')
+
+    def __str__(self):
+        return self.color_name
+
+
 class Mobile(models.Model):
     product = models.ForeignKey(Product, related_name='mobiles',
                                  on_delete=models.CASCADE)
+    choices = models.ManyToManyField(Choices, related_name='mobile_choices')
     screen_technology = models.CharField(max_length=100, null=True, blank=True)
     size = models.FloatField(null=True, blank=True)
     networks = models.CharField(max_length=100, null=True, blank=True)
@@ -74,6 +80,7 @@ class Mobile(models.Model):
 class Laptop(models.Model):
     product = models.ForeignKey(Product, related_name='laptops',
                                 on_delete=models.CASCADE)
+    choices = models.ManyToManyField(Choices, related_name='laptop_choices')
     cpu = models.CharField(max_length=100, null=True, blank=True)
     ram = models.CharField(max_length=100, null=True, blank=True)
     gpu = models.CharField(max_length=100, null=True, blank=True)
@@ -83,14 +90,3 @@ class Laptop(models.Model):
     def __str__(self):
         return self.product.title
 
-
-class Choices(models.Model):
-    mobile = models.ForeignKey(Mobile, related_name='mobile_colors',
-                                 on_delete=models.CASCADE, null=True, editable=False)
-    laptop = models.ForeignKey(Laptop, related_name='laptop_colors',
-                                 on_delete=models.CASCADE, null=True, editable=False)
-    color_name = models.CharField(max_length=100)
-    color = ColorField(default='#FF0000')
-
-    def __str__(self):
-        return self.color_name
