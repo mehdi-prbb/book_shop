@@ -1,6 +1,12 @@
 from django.views import generic
 
-from .models import Mobile, Laptop
+from .models import Mobile, Laptop, Product
+
+
+class AllProductsListView(generic.ListView):
+    queryset = Product.objects.all()
+    template_name = 'products/all_products.html'
+    context_object_name = 'products'
 
 
 class MobileListView(generic.ListView):
