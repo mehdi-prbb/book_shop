@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from colorfield.fields import ColorField
 
@@ -52,6 +53,19 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    def is_mobile(self):
+        return hasattr(self, 'mobiles')
+
+    def is_laptop(self):
+        return hasattr(self, 'laptops')
+
+    def get_absolute_url(self):
+        if self.is_laptop():
+            return reverse('laptop_detail', args=[self.slug])
+        elif self.is_mobile():
+            return reverse('mobile_detail', args=[self.slug])
+    
+
 
 class Choices(models.Model):
     color_name = models.CharField(max_length=100)
@@ -62,8 +76,7 @@ class Choices(models.Model):
 
 
 class Mobile(models.Model):
-    product = models.ForeignKey(Product, related_name='mobiles',
-                                 on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, related_name='mobiles', on_delete=models.CASCADE)
     choices = models.ManyToManyField(Choices, related_name='mobile_choices')
     screen_technology = models.CharField(max_length=100, null=True, blank=True)
     size = models.FloatField(null=True, blank=True)
@@ -76,10 +89,12 @@ class Mobile(models.Model):
     def __str__(self):
         return self.product.title
 
+    def get_absolute_url(self):
+        return reverse("mobile_detail", args=[self.product.slug])
+
 
 class Laptop(models.Model):
-    product = models.ForeignKey(Product, related_name='laptops',
-                                on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, related_name='laptops', on_delete=models.CASCADE)
     choices = models.ManyToManyField(Choices, related_name='laptop_choices')
     cpu = models.CharField(max_length=100, null=True, blank=True)
     ram = models.CharField(max_length=100, null=True, blank=True)
@@ -89,4 +104,7 @@ class Laptop(models.Model):
 
     def __str__(self):
         return self.product.title
+
+    def get_absolute_url(self):
+        return reverse("laptop_detail", args=[self.product.slug])
 
