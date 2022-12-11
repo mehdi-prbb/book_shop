@@ -1,7 +1,7 @@
 from django.views import generic
-from django.shortcuts import get_object_or_404
 
 from .models import Mobile, Laptop, Product
+from cart.forms import AddToCartForm
 
 
 class AllProductsListView(generic.ListView):
@@ -21,7 +21,7 @@ class MobileDetailView(generic.DetailView):
     template_name = 'products/mobile_details.html'
     slug_field = 'product__slug'
     slug_url_kwarg = 'mobile_slug'
-
+    
 
 class LaptopListView(generic.ListView):
     queryset = Laptop.objects.select_related('product').prefetch_related('choices')

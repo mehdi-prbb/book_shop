@@ -17,16 +17,19 @@ class Cart:
 
         self.cart = cart
 
-    def add(self, product, quantity=1):
+    def add(self, product, quantity=1, replace_current_quantity=False):
         """
         Add the specified product to the cart if it exists
         """
-        product_id = str(product.id)
+        product_slug = str(product.slug)
 
-        if product_id not in self.cart:
-            self.cart[product_id] = {'quantity' : quantity}
+        if product_slug not in self.cart:
+            self.cart[product_slug] = {'quantity' : 0}
+
+        if replace_current_quantity:
+            self.cart[product_slug]['quantity'] = quantity
         else:
-            self.cart[product_id]['quantity'] += quantity
+            self.cart[product_slug]['quantity'] += quantity
 
         self.save()
 
@@ -34,10 +37,10 @@ class Cart:
         """
         Remove product from the cart
         """
-        product_id = str(product.id)
+        product_slug = str(product.slug)
 
-        if product_id in self.cart:
-            del self.cart[product_id]
+        if product_slug in self.cart:
+            del self.cart[product_slug]
 
             self.save()
 
@@ -49,13 +52,13 @@ class Cart:
 
     def __iter__(self):
 
-        product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
+        product_slugs = self.cart.keys()
+        products = Product.objects.filter(slug__in=product_slugs)
 
         cart = self.cart.copy()
 
         for product in products:
-            cart[str(product.id)]['product_obj'] = product
+            cart[str(product.slug)]['product_obj'] = product
 
         for item in cart.values():
             yield item
@@ -69,7 +72,7 @@ class Cart:
         self.save()
 
     def get_total_price(self):
-        product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
+        product_slugs = self.cart.keys()
+        products = Product.objects.filter(id__in=product_slugs)
 
         return sum(product.price for product in products)
