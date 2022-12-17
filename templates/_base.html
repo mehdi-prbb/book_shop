@@ -106,12 +106,18 @@
                                         <i class="flaticon flaticon-user"></i>
                                     </a>
                                     <ul class="user-info-menu">
-                                        <li>
-                                            <a class="text-right" href="my-account.html">حساب کاربری</a>
-                                        </li>
-                                        <li>
-                                            <a class="text-right" href="cart.html">سبد خرید</a>
-                                        </li>
+                                        {% if user.is_authenticated %}
+                                            <li>
+                                                <a class="text-right" href="{% url 'account_logout' %}">خروج</a>
+                                            </li>
+                                        {% else %}
+                                            <li>
+                                                <a class="text-right" href="{% url 'account_login' %}">ورود</a>
+                                            </li>
+                                            <li>
+                                                <a class="text-right" href="{% url 'account_signup' %}">حساب جدید</a>
+                                            </li>
+                                        {% endif %}
                                         <li>
                                             <a class="text-right" href="wishlist.html">علاقه مندی ها</a>
                                         </li>
@@ -136,6 +142,18 @@
                 </div>
             </div>
         </header>
+        {% if messages %}
+            <div class="container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {#    <ul class="messages">#}
+            {#        {% for message in messages %}#}
+            {#            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+            {#        {% endfor %}#}
+            {#    </ul>#}
+        {% endif %}
         {% block content %}
 
         {% endblock content %}

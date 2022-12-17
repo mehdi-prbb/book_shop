@@ -1,3 +1,5 @@
+from django.contrib import messages
+
 from products.models import Product
 
 
@@ -31,6 +33,8 @@ class Cart:
         else:
             self.cart[product_slug]['quantity'] += quantity
 
+        messages.success(self.request, 'Product successfully added to cart')
+
         self.save()
 
     def remove(self, product):
@@ -41,6 +45,8 @@ class Cart:
 
         if product_slug in self.cart:
             del self.cart[product_slug]
+
+            messages.success(self.request, 'Product successfully removed from cart')
 
             self.save()
 
