@@ -5,6 +5,11 @@
 {% endblock page_title %}
 
 {% block content %}
+
+    <!-- Breadcrumb area Start -->
+    {% include 'header_title.html' with header_name='محصولات' %}
+    <!-- Breadcrumb area End -->
+
     <!-- Main Content Wrapper Start -->
     <div  class="main-content-wrapper container-fluid">
         <div class="shop-page-wrapper shop-fullwidth">
@@ -81,6 +86,12 @@
         </div>
     </div>
     <!-- Main Content Wrapper Start -->
+
+    <!-- Cart Side Bar Start -->
+
+    {% include 'cart/cart_sidebar.html' %}
+
+    <!-- Cart Side Bar End -->
 
 {% endblock content %}
 
