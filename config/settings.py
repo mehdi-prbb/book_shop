@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'django.contrib.humanize',
+
     # Third party
     'allauth',
     'allauth.account',
@@ -60,6 +62,7 @@ INSTALLED_APPS = [
     'pages',
     'products',
     'cart',
+    'persian_translate',
 ]
 
 SITE_ID = 1
