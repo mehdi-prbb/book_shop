@@ -32,6 +32,9 @@
                                 {% for color in mobile.choices.all %}
                                     {{ color.color }}
                                 {% endfor %}
+
+                                {{ mobile.product.description|safe }}
+                                
                             </p>
                             <div class="my-5 py-5 product-price-wrapper mb--25">
                                 <span class="money text-success">{{ mobile.product.price|intcomma|translate_number }}</span>

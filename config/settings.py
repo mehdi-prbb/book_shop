@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'colorfield',
     'debug_toolbar',
+    'ckeditor',
 
     # my apps
     'accounts',

@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+
 from colorfield.fields import ColorField
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -36,7 +38,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True,
                              editable=False)
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = RichTextField()
     price = models.PositiveIntegerField(default=0)
     active = models.BooleanField(default=True)
     cover = models.ImageField(upload_to='products_cover/')
