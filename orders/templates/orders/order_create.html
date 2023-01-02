@@ -26,7 +26,13 @@
                         <h2>جزئیات سفارش</h2>
                     </div>
                     <div class="checkout-form">
-                        <form action="#" class="form form--checkout">
+                        <form action="" method="POST" class="form form--checkout">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.errors }}
+                                </div>
+                            {% endif %}
                             <div class="form-row mb--20">
                                 <div class="form__group col-md-6 mb-sm--30">
                                     <label for="billing_fname" class="form__label form__label--2">نام  <span class="required">*</span></label>
@@ -61,6 +67,7 @@
                                     <textarea class="form__input form__input--2 form__input--textarea" id="orderNotes" name="order_notes" placeholder="اگر یادداشتی دارید در اینجا وارد کنید. در غیر این صورت این مکان را خالی بگذارید"></textarea>
                                 </div>
                             </div>
+                            <button class="btn" type="submit">ارسال</button>
                         </form>
                     </div>
                 </div>
@@ -116,5 +123,11 @@
     </div>
 </div>
 <!-- Main Content Wrapper Start -->
+
+<!-- Cart Side Bar Start -->
+
+{% include 'cart/cart_sidebar.html' %}
+
+<!-- Cart Side Bar End -->
 
 {% endblock content %}

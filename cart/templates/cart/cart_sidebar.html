@@ -15,7 +15,7 @@
                         <li class="mini-cart__product d-flex justify-content-between">
                             <div class="mini-cart__product__image">
                                 <a href="#">
-                                    <img src="assets/img/products/prod-1-100x100.jpg">
+                                    <img src="{{ item.product_obj.cover.url }}">
                                 </a>
                             </div>
                             <div class="mini-cart__product__content pt-2">
@@ -38,7 +38,9 @@
                 </div>
                 <div class="mini-cart__buttons">
                     <a href="{% url 'cart:cart_detail' %}" class="btn btn-fullwidth btn-bg-sand mb--20">مشاهده سبد خرید</a>
-                    <a href="checkout.html" class="btn btn-fullwidth btn-bg-sand">پرداخت</a>
+                    {% if not cart.is_empty %}
+                        <a href="{% url 'order_create' %}" class="btn btn-fullwidth btn-bg-sand">پرداخت</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

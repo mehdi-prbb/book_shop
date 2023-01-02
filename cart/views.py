@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+
 
 from products.models import Product
 from .cart import Cart
@@ -30,7 +33,8 @@ def add_to_cart_view(request, product_slug):
         quantity = cleaned_data['quantity']
         cart.add(product, quantity, replace_current_quantity=cleaned_data['inplace'])
 
-    return redirect('cart:cart_detail')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 def remove_from_cart(request, product_slug):
     cart = Cart(request)
@@ -38,5 +42,18 @@ def remove_from_cart(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug)
 
     cart.remove(product)
+
+    return redirect('cart:cart_detail')
+
+
+@require_POST
+def clear_cart(request):
+    cart = Cart(request)
+
+    if len(cart):
+        cart.clear()
+        messages.success(request, 'your cart successfully cleared.')
+    else:
+        messages.warning(request, 'your cart already empty.')
 
     return redirect('cart:cart_detail')
